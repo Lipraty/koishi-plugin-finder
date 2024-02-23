@@ -8,15 +8,30 @@
     "lib",
     "dist"
   ],
+  "koishi": {
+    "description": {
+      "zh": "快速指令访问",
+      "en": "Now command, fast Finder",
+      "de": "Jetzt Befehl, schneller Finder",
+      "ja": "今コマンド、高速ファインダー"
+    },
+    "service": {
+      "implements": [
+        "finder"
+      ]
+    }
+  },
   "license": "MIT",
-  "scripts": {},
   "keywords": [
     "chatbot",
     "koishi",
     "plugin"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "@koishijs/client": "^5.27.9"
+  },
   "peerDependencies": {
+    "@koishijs/plugin-console": "^5.27.9",
     "koishi": "^4.16.8"
   }
 }
