@@ -18,17 +18,41 @@
     "service": {
       "implements": [
         "finder"
+      ],
+      "required": [
+        "database",
+        "console"
       ]
     }
   },
   "license": "MIT",
+  "scripts": {
+    "build": "yakumo build",
+    "bump": "yakumo bump",
+    "clean": "yakumo clean",
+    "pub": "yakumo pub",
+    "lint": ""
+  },
   "keywords": [
     "chatbot",
     "koishi",
-    "plugin"
+    "plugin",
+    "finder",
+    "command"
   ],
   "devDependencies": {
-    "@koishijs/client": "^5.27.9"
+    "@koishijs/client": "^5.27.9",
+    "@types/node": "^20.10.2",
+    "@types/react": "^18.2.48", 
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.18.20",
+    "esbuild-register": "npm:@shigma/esbuild-register@^1.1.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.2",
+    "yakumo": "^1.0.0-beta.4",
+    "yakumo-esbuild": "^1.0.0-beta.2",
+    "yakumo-tsc": "^1.0.0-beta.2",
+    "yml-register": "^1.1.0"
   },
   "peerDependencies": {
     "@koishijs/plugin-console": "^5.27.9",
