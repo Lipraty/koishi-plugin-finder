@@ -1,10 +1,9 @@
 <template>
   <div v-if="current.name === 'finder'" ref="finderRef" class="finder">
-    <hr>
     <Menu />
-    <div class="finder-content" >
-      乌拉！{{ parentWidth }}
-    </div>
+      <k-content>
+        <h2 class="k-schema-header">主页</h2>
+      </k-content>
   </div>
 </template>
 
@@ -15,7 +14,7 @@ import { } from 'koishi-plugin-finder'
 import Menu from './components/menu.vue'
 
 const viewPool = []
-''.split
+
 const current: any = inject('manager.settings.current')
 
 const parentWidth = ref(0)
@@ -26,7 +25,7 @@ onMounted(() => {
   const parent = getCurrentInstance().parent.parent.parent?.parent?.parent // this > Anonymous > KSlot > Plugin > ElScrollbar
   console.log(parent)
   parentWidth.value = getParentWidth(parent)
-   finderRef.value.style.width = `${parentWidth.value}px`
+  finderRef.value.style.width = `${parentWidth.value}px`
 
   window.addEventListener('resize', () => {
     parentWidth.value = getParentWidth(parent)
