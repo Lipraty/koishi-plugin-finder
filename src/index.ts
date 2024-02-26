@@ -18,18 +18,22 @@ export const inject = {
   required: ['database']
 }
 
-export interface Config { }
+export interface Config {
+  unsafe: boolean
+}
 
-export const Config: Schema<Config> = Schema.object({})
+export const Config: Schema<Config> = Schema.object({
+  unsafe: Schema.boolean().default(false).description('<span title="Finder 插件不会审查来自其他插件注册的 Finder 块。">允许来自其他插件注册的 Finder 块</span>')
+}).description('基本')
 
 export function apply(ctx: Context) {
-  //
+  // Database
   ctx.model.extend('finder', {
     id: 'unsigned',
     name: 'string',
     description: 'text',
     tags: 'list',
-    conditions: 'json',
+    trigger: 'json',
     actions: 'json',
     repeated: 'boolean',
     duration: 'integer',
