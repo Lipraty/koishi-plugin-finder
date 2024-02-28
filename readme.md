@@ -40,3 +40,7 @@ Allow blocks registered by other plugins to be used in the finder.
 - Default: `8`
 
 The maximum number of steps that the finder action block can take.
+
+## License
+
+This project is licensed under the [AGPL-3.0](./LICENSE) license.
