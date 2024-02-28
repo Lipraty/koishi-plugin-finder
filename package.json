@@ -27,7 +27,7 @@
     "preview": true,
     "hidden": true
   },
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "scripts": {
     "build": "yakumo build",
     "bump": "yakumo bump",
