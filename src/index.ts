@@ -1,8 +1,8 @@
-import { Context, Schema } from 'koishi'
-import {} from '@koishijs/plugin-console'
-import { FinderService } from './service'
-import { FinderDatabase } from './types'
+import { Context, Logger, Schema, Service } from 'koishi'
+import { } from '@koishijs/plugin-console'
 import { resolve } from 'path'
+import { FinderDatabase } from './types'
+import locales from './locale'
 
 declare module 'koishi' {
   interface Tables {
@@ -10,43 +10,72 @@ declare module 'koishi' {
   }
 }
 
-export const name = 'finder'
+class Finder extends Service {
+  // pending upstream to support
+  // static [Service.provide] = 'finder'
+  // static [Service.inject] = {
+  //   required: ['database']
+  // }
+  static readonly name = 'finder'
+  static readonly filter = false
+  static readonly inject = {
+    required: ['database']
+  }
 
-export const filter = false
+  private log: Logger
 
-export const inject = {
-  required: ['database']
-}
+  // [Service.setup]() {
+  //   super[Service.setup]()
+  //   this.log = this.ctx.logger(Finder.name)
+  //   this.ctx.inject(['console'], ctx => {
+  //     ctx.console.addEntry({
+  //       dev: resolve(__dirname, '../client/index.ts'),
+  //       prod: resolve(__dirname, '../dist')
+  //     })
+  //   })
+  // }
 
-export interface Config {
-  unsafe: boolean
-}
+  constructor(ctx: Context, config: Finder.Config) {
+    super(ctx)
+    this.config = config
+    this.log = ctx.logger(Finder.name)
 
-export const Config: Schema<Config> = Schema.object({
-  unsafe: Schema.boolean().default(false).description('<span title="Finder 插件不会审查来自其他插件注册的 Finder 块。">允许来自其他插件注册的 Finder 块</span>')
-}).description('基本')
-
-export function apply(ctx: Context) {
-  // Database
-  ctx.model.extend('finder', {
-    id: 'unsigned',
-    name: 'string',
-    description: 'text',
-    tags: 'list',
-    trigger: 'json',
-    actions: 'json',
-    repeated: 'boolean',
-    duration: 'integer',
-    createdAt: 'timestamp',
-    updatedAt: 'timestamp',
-  })
-  // Interval
-  ctx.plugin(FinderService)
-  // WebUI
-  ctx.inject(['console'], (ctx) => {
-    ctx.console.addEntry({
-      dev: resolve(__dirname, '../client/index.ts'),
-      prod: resolve(__dirname, '../dist')
+    ctx.database.extend('finder', {
+      id: 'unsigned',
+      name: 'string',
+      description: 'text',
+      tags: 'list',
+      trigger: 'json',
+      actions: 'json',
+      repeated: 'boolean',
+      duration: 'integer',
+      createdAt: 'timestamp',
+      updatedAt: 'timestamp',
     })
+
+    ctx.inject(['console'], ctx => {
+      ctx.console.addEntry({
+        dev: resolve(__dirname, '../client/index.ts'),
+        prod: resolve(__dirname, '../dist')
+      })
+    })
+  }
+
+
+}
+
+namespace Finder {
+  export interface Config {
+    unsafe: boolean
+    maxSteps: number
+  }
+
+  export const Config: Schema<Config> = Schema.object({
+    unsafe: Schema.boolean().default(false),
+    maxSteps: Schema.number().default(8).min(1).max(16)
+  }).i18n({
+    'zh-CN': require('./locales/schema.zh-cn')
   })
 }
+
+export default Finder
