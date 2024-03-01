@@ -6,24 +6,31 @@ Now command, fast `Finder`
 
 ## Install
 
-Install the plugin from the koishi market:
+Install the plugin from market in the koishi-(desktop/android/docker):
 
 - Open your koishi market
 - Search `finder`
 - Click the install button
 - Open your plugin configuration page and enable the plugin
 
-Install the plugin from the terminal:
+Install the plugin from the boilerplate workspace:
 
 ```bash
 yarn add koishi-plugin-finder
 ```
 
-## Usage
+## API
 
-The finder has a simple and easy-to-use UI.
+### Class: `Finder`
 
-..image
+Access via `ctx.finder`.
+
+#### `finder.registerAction(name, action)`
+
+- `name` string: The name of the action.
+- `action` function: The action to be registered.
+
+Register a new action for the Finder.
 
 ## Configuration
 
